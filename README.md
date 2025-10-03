@@ -37,3 +37,6 @@ ctest --test-dir build --output-on-failure
 - Monthly compounding option
 - JSON config for fees/rates
 
+## License
+MIT License © 2025 Junayed Rahman
+
