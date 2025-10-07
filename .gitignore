@@ -22,3 +22,8 @@ tests/*.dSYM/
 unit_test
 fuzz_test
 scale_test
+*.log
+tests/*.dSYM/
+unit_test
+fuzz_test
+scale_test
