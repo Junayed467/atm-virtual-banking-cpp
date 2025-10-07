@@ -1,2 +1,2 @@
-#include "SavingAccount.h"
-// Methods implemented in header for simplicity.
+#include "../include/SavingAccount.h"
+// inline by design

@@ -1,20 +1,26 @@
 #pragma once
 #include "BankAccount.h"
 
-// Checking account that charges a flat fee per check/transfer-like operation.
+// Simple checking account with a per-check fee (e.g., $2.00).
 class CheckingAccount : public BankAccount {
-    double feePerCheck_;
-
+    double perCheckFee_;
 public:
-    CheckingAccount(double initialBalance = 0.0, double feePerCheck = 0.0, std::string owner = {})
-        : BankAccount(initialBalance, std::move(owner)), feePerCheck_(feePerCheck) {}
+    CheckingAccount(double initialBalance = 0.0,
+                    double perCheckFee     = 0.0,
+                    const std::string& owner = std::string())
+        : BankAccount(initialBalance, owner),
+          perCheckFee_(perCheckFee) {}
 
-    double getFeePerCheck() const noexcept { return feePerCheck_; }
-    void setFeePerCheck(double f) noexcept { feePerCheck_ = f; }
+    double fee() const { return perCheckFee_; }
+    void   setFee(double f) { perCheckFee_ = f; }
 
-    // A "check" is modeled as withdrawing amount + fee atomically.
+    // Write a check for 'amount' -> withdraw amount + fee atomically.
+    // Returns true if it succeeds without overdrawing.
     bool writeCheck(double amount) {
-        const double total = amount + feePerCheck_;
-        return withdraw(total);
+        if (amount <= 0.0) return false;
+        const double total = amount + perCheckFee_;
+        if (total > balance_) return false;
+        balance_ -= total;
+        return true;
     }
 };

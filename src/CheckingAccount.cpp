@@ -1,2 +1,2 @@
-#include "CheckingAccount.h"
-// Methods implemented in header for simplicity.
+#include "../include/CheckingAccount.h"
+// All logic is inline in the header on purpose.
