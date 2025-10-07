@@ -1,3 +1,27 @@
+# Ignore specific large log files
+wal_scale.log
+tests/wal_concurrency.log
+
+# Ignore all .log files in general (good practice)
+*.log
+
+# Optional: ignore build/test artifacts
+tests/*.dSYM/
+unit_test
+fuzz_test
+scale_test
+# Ignore specific large log files
+wal_scale.log
+tests/wal_concurrency.log
+
+# Ignore all .log files in general (good practice)
+*.log
+
+# Optional: ignore build/test artifacts
+tests/*.dSYM/
+unit_test
+fuzz_test
+scale_test
 # Build artifacts
 /build/
 /CMakeFiles/
