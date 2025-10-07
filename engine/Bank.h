@@ -22,7 +22,7 @@ public:
     };
 
 private:
-    std::vector<std::unique_ptr<Rec> > accounts_;
+    std::vector<std::unique_ptr<Rec>> accounts_;
     Wal& wal_;
 
 public:
@@ -31,16 +31,15 @@ public:
       : accounts_(), wal_(wal) {
         if (nAccounts <= 0) throw std::invalid_argument("nAccounts must be > 0");
         accounts_.reserve(static_cast<size_t>(nAccounts));
-        for (int i = 0; i < nAccounts; ++i) {
-            std::unique_ptr<BankAccount> ba;
-            if (i % 3 == 0)
-                ba.reset(new SavingAccount(initial, savingAprPercent, "S" + std::to_string(i)));
-            else
-                ba.reset(new BankAccount(initial, "B" + std::to_string(i)));
 
-            // move unique_ptr exactly once into Rec, and once into vector
-            std::unique_ptr<Rec> rec(new Rec(std::move(ba)));
-            accounts_.push_back(std::move(rec));
+        for (int i = 0; i < nAccounts; ++i) {
+            auto ba = (i % 3 == 0)
+                ? std::unique_ptr<BankAccount>(std::make_unique<SavingAccount>(
+                      initial, savingAprPercent, "S" + std::to_string(i)))
+                : std::unique_ptr<BankAccount>(std::make_unique<BankAccount>(
+                      initial, "B" + std::to_string(i)));
+
+            accounts_.emplace_back(std::make_unique<Rec>(std::move(ba)));
         }
     }
 
